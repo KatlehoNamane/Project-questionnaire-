@@ -5,60 +5,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anonymous Questionnaire</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .question {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
 
-<h2>Questionnaire</h2>
+<div class="container">
+    <h2>Anonymous Questionnaire</h2>
 
-<form id="questionnaireForm">
-    <label for="q1">Question 1: What is your favorite color?</label><br>
-    <select id="q1" name="q1">
-        <option value="">Select an option</option>
-        <option value="red">Red</option>
-        <option value="blue">Blue</option>
-        <option value="green">Green</option>
-        <option value="yellow">Yellow</option>
-        <option value="other">Other</option>
-    </select><br><br>
-    
-    <label for="q2">Question 2: What is your favorite animal?</label><br>
-    <select id="q2" name="q2">
-        <option value="">Select an option</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="bird">Bird</option>
-        <option value="fish">Fish</option>
-        <option value="other">Other</option>
-    </select><br><br>
+    <div class="question">
+        <label for="color">What is your favorite color?</label>
+        <select id="color">
+            <option value="">Select an option</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
 
-    <button type="button" onclick="saveResponses()">Save Responses</button>
-</form>
+    <div class="question">
+        <label for="animal">What is your favorite animal?</label>
+        <select id="animal">
+            <option value="">Select an option</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="bird">Bird</option>
+            <option value="fish">Fish</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+
+    <button onclick="submitForm()">Submit</button>
+</div>
 
 <script>
-    function saveResponses() {
-        const form = document.getElementById('questionnaireForm');
-        const formData = new FormData(form);
-        const responses = {};
+    function submitForm() {
+        const color = document.getElementById('color').value;
+        const animal = document.getElementById('animal').value;
 
-        for (const [name, value] of formData) {
-            responses[name] = value;
-        }
+        // Generate a random user ID
+        const userId = 'user_' + Math.random().toString(36).substr(2, 9);
 
-        // Generate a unique identifier for the user
-        const userId = generateUserId();
+        // Compose email content
+        const subject = 'Anonymous Questionnaire Response';
+        const body = `User ID: ${userId}\nFavorite Color: ${color}\nFavorite Animal: ${animal}`;
 
-        // Save responses and user ID in localStorage
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('responses', JSON.stringify(responses));
+        // Send email using mailto link
+        const mailtoLink = `mailto:kamohelokoali201@gmail.com.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
 
-        alert('Your responses have been saved!');
-    }
-
-    function generateUserId() {
-        // Generate a random string for user ID
-        return 'user_' + Math.random().toString(36).substr(2, 9);
+        // You may also send the form data to a server-side script using AJAX for processing
     }
 </script>
 
 </body>
-                                  </html>
+            </html>
